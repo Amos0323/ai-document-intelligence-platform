@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <rect width="1440" height="900" fill="#f8fafc"/>
+  <rect width="230" height="900" fill="#06254b"/>
+  <rect x="278" y="72" width="350" height="32" rx="6" fill="#dbe3ee"/>
+  <rect x="278" y="148" width="1110" height="120" rx="12" fill="#fff" stroke="#dbe3ee"/>
+  <rect x="278" y="296" width="690" height="260" rx="12" fill="#fff" stroke="#dbe3ee"/>
+  <rect x="992" y="296" width="396" height="260" rx="12" fill="#fff" stroke="#dbe3ee"/>
+  <rect x="278" y="584" width="1110" height="250" rx="12" fill="#fff" stroke="#dbe3ee"/>
+  <text x="720" y="865" text-anchor="middle" font-family="Arial" font-size="18" fill="#64748b">Replace with dashboard screenshot</text>
+</svg>
+

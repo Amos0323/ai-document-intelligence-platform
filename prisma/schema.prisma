@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Document {
+  id                 String            @id @default(cuid())
+  originalName       String
+  storedName         String
+  mimeType           String
+  filePath           String
+  documentType       String            @default("GENERAL")
+  status             String            @default("UPLOADED")
+  extractedText      String?
+  extractedData      String?
+  confidence         Float             @default(0)
+  extractionMethod   String?
+  extractionError    String?
+  processingTimeMs   Int?
+  vendorName         String?
+  invoiceNumber      String?
+  reviewerNotes      String?
+  reviewDecisionAt   DateTime?
+  uploadedAt         DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  risks              RiskFlag[]
+  validationIssues   ValidationIssue[]
+  auditEvents        AuditEvent[]
+
+  @@index([status])
+  @@index([documentType])
+  @@index([invoiceNumber])
+  @@index([uploadedAt])
+}
+
+model RiskFlag {
+  id              String   @id @default(cuid())
+  documentId      String
+  riskType        String
+  severity        String
+  description     String
+  suggestedAction String
+  createdAt       DateTime @default(now())
+  document        Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+  @@index([severity])
+}
+
+model ValidationIssue {
+  id         String   @id @default(cuid())
+  documentId String
+  field      String
+  message    String
+  severity   String   @default("error")
+  createdAt  DateTime @default(now())
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+}
+
+model AuditEvent {
+  id         String   @id @default(cuid())
+  documentId String
+  eventType  String
+  title      String
+  detail     String?
+  actor      String   @default("System")
+  createdAt  DateTime @default(now())
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+  @@index([createdAt])
+}

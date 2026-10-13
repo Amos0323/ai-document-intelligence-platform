@@ -1,18 +1,14 @@
-# Persistent disks require a paid Render service. Review cost before provisioning.
+# Free portfolio demo: uploaded documents and edits reset on restart.
 services:
   - type: web
     name: docuintel-api
     runtime: docker
-    plan: starter
+    plan: free
     healthCheckPath: /api/health
-    disk:
-      name: docuintel-data
-      mountPath: /app/storage
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_URL
-        value: file:/app/storage/docuintel.db
-      - key: UPLOAD_DIR
-        value: /app/storage/uploads
+      - key: SEED_DEMO_DATA
+        value: "true"
+      - key: VITE_TEMPORARY_DEMO
+        value: "true"

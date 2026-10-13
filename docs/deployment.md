@@ -4,12 +4,27 @@ The Vercel project builds the Vite frontend only. `server/index.ts` is a separat
 Express process; Vite's development proxy does not exist in a production build.
 Without a backend, dashboard, documents, review and upload requests return 404.
 
-## Backend with persistent storage
+## Free portfolio demo (default)
 
-The included `render.yaml` runs the Docker image on Render with a persistent disk
-for SQLite and uploaded documents. Review the paid service and disk cost before
-creating a Blueprint from this repository. No cloud resources are created by
-adding this file.
+The included `render.yaml` uses Render's **Free** web service without a paid disk.
+It restores sample data on startup when the database is empty. Uploaded files,
+review decisions and edits are temporary: they disappear on redeploy, restart,
+or idle spin-down. This is suitable only for a portfolio demonstration.
+
+Create a Blueprint from this repository, using branch `main`. It must show the
+Free instance and no disk before deployment. No paid OpenAI key is required:
+the existing fallback extractor supports manual review without an AI API call.
+Render can take about a minute to wake after 15 minutes of inactivity.
+
+Set `VITE_TEMPORARY_DEMO=true` on the Vercel frontend as well as
+`VITE_API_BASE_URL` so visitors see the temporary-data notice. Redeploy after
+changing these build settings. Free usage is subject to hosting limits.
+
+## Optional backend with persistent storage
+
+Keeping documents across restarts requires a separate persistent database and
+file store, or a paid persistent disk. The default Blueprint does not provision
+either. Do not select a paid service for the free demo.
 
 The container initializes the database before starting Express. Wait for
 `https://YOUR-BACKEND/api/health` to return `{"status":"ok"}`. The initial database

@@ -141,7 +141,7 @@ export function UploadPage() {
           </Alert>
           <div className="flex items-center gap-2 px-1 text-xs text-muted-foreground">
             <ShieldCheck className="size-4 text-success" aria-hidden="true" />
-            Files stay on your local development machine.
+            Files are stored on the application server.
           </div>
           <div className="flex items-center gap-2 px-1 text-xs text-muted-foreground">
             <Image className="size-4" aria-hidden="true" />

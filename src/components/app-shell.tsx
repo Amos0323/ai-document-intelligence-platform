@@ -100,6 +100,11 @@ export function AppShell() {
           <Navigation mobile />
         </header>
         <main className="mx-auto min-h-screen max-w-[1600px] p-4 sm:p-6 lg:p-8">
+          {import.meta.env.VITE_TEMPORARY_DEMO === "true" ? (
+            <p role="note" className="mb-5 rounded-lg border border-border bg-muted p-3 text-sm text-muted-foreground">
+              Portfolio demo: use sample files only. Uploaded documents and review changes reset when the server restarts. The first request may take about a minute while the server wakes up.
+            </p>
+          ) : null}
           <Outlet />
         </main>
       </div>

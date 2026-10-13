@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
-import { api, apiUrl } from "../src/lib/api"
+import { api, apiUrl } from "../src/lib/api.js"
 
 afterEach(() => {
   vi.unstubAllEnvs()

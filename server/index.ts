@@ -15,7 +15,7 @@ import { documentTypes } from "./domain/schemas.js"
 
 const app = express()
 const port = Number(process.env.PORT ?? 3001)
-const uploadDirectory = path.resolve("uploads")
+const uploadDirectory = path.resolve(process.env.UPLOAD_DIR ?? "uploads")
 mkdirSync(uploadDirectory, { recursive: true })
 
 const upload = multer({
@@ -45,7 +45,14 @@ const upload = multer({
 app.use(cors())
 app.use(express.json({ limit: "2mb" }))
 
-app.get("/api/health", (_request, response) => response.json({ status: "ok" }))
+app.get("/api/health", async (_request, response, next) => {
+  try {
+    await db.document.count()
+    response.json({ status: "ok" })
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.get("/api/dashboard", async (_request, response, next) => {
   try {
@@ -235,6 +242,10 @@ app.get("/api/documents/:id/export", async (request, response, next) => {
   } catch (error) {
     next(error)
   }
+})
+
+app.use("/api", (_request, response) => {
+  response.status(404).json({ message: "API route not found" })
 })
 
 if (process.env.NODE_ENV === "production") {

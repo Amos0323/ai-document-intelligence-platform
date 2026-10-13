@@ -1,8 +1,18 @@
+export function apiUrl(url: string): string {
+  const origin = (import.meta.env.VITE_API_BASE_URL ?? "").trim().replace(/\/+$/, "")
+  return `${origin}${url}`
+}
+
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(url, options)
+  const response = await fetch(apiUrl(url), options)
   if (!response.ok) {
     const payload = (await response.json().catch(() => null)) as { message?: string } | null
-    throw new Error(payload?.message ?? `Request failed with status ${response.status}`)
+    throw new Error(payload?.message ?? (response.status === 404
+      ? "The document API could not be found. Configure VITE_API_BASE_URL with the backend address and redeploy the frontend."
+      : `Request failed with status ${response.status}`))
+  }
+  if (!response.headers.get("content-type")?.includes("application/json")) {
+    throw new Error("The server returned a web page instead of document data. Check the backend address and API routing.")
   }
   return response.json() as Promise<T>
 }

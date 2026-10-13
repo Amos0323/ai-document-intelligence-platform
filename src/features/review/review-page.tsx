@@ -15,7 +15,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Link, useParams } from "react-router-dom"
 import { toast } from "sonner"
-import { api } from "@/lib/api"
+import { api, apiUrl } from "@/lib/api"
 import { formatDateTime, titleCase } from "@/lib/utils"
 import type { DocumentRecord } from "@/types/documents"
 import { Alert } from "@/components/ui/alert"
@@ -321,13 +321,13 @@ export function ReviewPage() {
 
             <div className="flex flex-wrap justify-between gap-2 border-t border-border pt-5">
               <div className="flex gap-2">
-                <a href={`/api/documents/${id}/export?format=json`}>
+                <a href={apiUrl(`/api/documents/${id}/export?format=json`)}>
                   <Button variant="outline" type="button">
                     <Download data-icon="inline-start" />
                     JSON
                   </Button>
                 </a>
-                <a href={`/api/documents/${id}/export?format=csv`}>
+                <a href={apiUrl(`/api/documents/${id}/export?format=csv`)}>
                   <Button variant="outline" type="button">CSV</Button>
                 </a>
               </div>

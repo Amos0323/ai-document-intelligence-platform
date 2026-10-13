@@ -1,0 +1,18 @@
+# Persistent disks require a paid Render service. Review cost before provisioning.
+services:
+  - type: web
+    name: docuintel-api
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    disk:
+      name: docuintel-data
+      mountPath: /app/storage
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:/app/storage/docuintel.db
+      - key: UPLOAD_DIR
+        value: /app/storage/uploads

@@ -315,6 +315,9 @@ A complete talk track is in [docs/demo-script.md](docs/demo-script.md).
 
 ## Docker
 
+For the Vercel frontend plus a persistent backend, see [deployment instructions](docs/deployment.md).
+Deploying only the Vite build does not run the document API.
+
 ```bash
 docker build -t docuintel .
 docker run --env-file .env.local -p 3001:3001 docuintel
